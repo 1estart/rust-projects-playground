@@ -1,8 +1,10 @@
-extern crate structopt;
 extern crate colored;
+extern crate structopt;
 
-use structopt::StructOpt;
 use colored::*;
+use exitfailure::ExitFailure;
+use failure::ResultExt;
+use structopt::StructOpt;
 
 #[derive(StructOpt)]
 struct Options {
@@ -16,10 +18,10 @@ struct Options {
 
     #[structopt(short = "f", long = "file", parse(from_os_str))]
     /// Load the cat text picture from the specified file
-    catfile: Option<std::path::PathBuf>
+    catfile: Option<std::path::PathBuf>,
 }
 
-fn main() {
+fn main() -> Result<(), ExitFailure> {
     let options = Options::from_args();
     let message = options.message;
     if message.to_lowercase() == "woof" {
@@ -29,18 +31,18 @@ fn main() {
     match &options.catfile {
         Some(path) => {
             let cat_template = std::fs::read_to_string(path)
-            .expect(&format!("could not read file {:?}", path));
+                .with_context(|_| format!("could not read file {:?}", path))?;
             let cat_picture = cat_template.replace("{eye}", eye);
             println!("{}", &cat_picture);
         }
-        None =>    {
+        None => {
             println!("{}", message.bright_yellow().underline().on_purple());
             println!(" \\");
             println!("  \\");
             println!("     /\\_/\\");
-            println!("    ( {eye} {eye} )", eye=eye);
+            println!("    ( {eye} {eye} )", eye = eye);
             println!("    =( I )=");
-            }
-    }
-
+        }
+    };
+    Ok(())
 }
