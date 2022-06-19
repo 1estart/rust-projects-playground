@@ -1,5 +1,5 @@
 [package]
-name = "catsay"
+name = "catsay_1estart"
 description = "clone unix cowsay, program which output text as cat say it"
 license = "MIT"
 version = "0.1.0"
