@@ -1,0 +1,7 @@
+run from cargo:
+cargo run --
+install to .cargo/bin
+cargo install -- path ./
+get from crates.io
+https://crates.io/crates/catsay-1estart
+
