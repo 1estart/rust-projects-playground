@@ -6,24 +6,20 @@ use exitfailure::ExitFailure;
 use failure::ResultExt;
 use structopt::StructOpt;
 
-#[derive(StructOpt)]
-struct Options {
-    #[structopt(default_value = "Meow!")]
-    /// What does the cat say?
-    message: String,
+use std::io::{self, Read};
 
-    #[structopt(short = "d", long = "dead")]
-    /// Make the cat appear dead
-    dead: bool,
-
-    #[structopt(short = "f", long = "file", parse(from_os_str))]
-    /// Load the cat text picture from the specified file
-    catfile: Option<std::path::PathBuf>,
-}
+mod options;
+use options::*;
 
 fn main() -> Result<(), ExitFailure> {
     let options = Options::from_args();
-    let message = options.message;
+    let mut message = String::new();
+    if options.stdin {
+        io::stdin().read_to_string(&mut message)?;
+        message = message.trim().to_string();
+    } else {
+        message = options.message;
+    };
     if message.to_lowercase() == "woof" {
         eprintln!("A cat shouldn't bark like a dog.")
     }
