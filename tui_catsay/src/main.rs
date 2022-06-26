@@ -8,7 +8,7 @@ use cursive::{Cursive, CursiveExt};
 // wrap all form fields value in one struct so we can pass
 // around easily
 struct CatsayOptions<'a> {
-    message: &'a str,
+    message: &'a str, 
     dead: bool,
 }
 
