@@ -1,0 +1,16 @@
+[package]
+name = "cat-breeds-k-means"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+csv = "1.1.6"
+gnuplot = "0.0.37"
+rand = "0.8.5"
+rand_distr = "0.4.3"
+rusty-machine = "0.5.4"
+serde = { version = "1.0.137", features = ["derive"] }
+structopt = "0.3.26"
+toml = "0.5.9"
